@@ -21,6 +21,7 @@
         <item name="android:paddingTop">@dimen/padding</item>
         <item name="android:paddingBottom">@dimen/padding</item>
         <item name="android:paddingRight">@dimen/padding</item>
+        <item name="backgroundTint">@color/colorAccent</item>
         <item name="android:fontFamily">@font/robotolight</item>
     </style>
 
