@@ -1,52 +1,49 @@
 package com.mercadolibre.candidate.uicontrollers.activities
 
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
+import android.text.Editable
+import android.text.TextWatcher
 import com.mercadolibre.candidate.R
-import com.mercadolibre.candidate.constants.SITE_ID
-import com.mercadolibre.candidate.model.SearchResultItem
-import com.mercadolibre.candidate.services.Service
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.mercadolibre.candidate.constants.SEARCH_STRING
+import kotlinx.android.synthetic.main.activity_search.*
 
 
 class ActivitySearch : ActivityBase() {
 
-    var service: Call<SearchResultItem>? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-    }
+        setContentView(R.layout.activity_search)
 
-    override fun onStart() {
-        super.onStart()
-
-        service = retrofit.create<Service>(Service::class.java).listSearchResultItems(SITE_ID, "chromecast")
-
-        service?.enqueue(object : Callback<SearchResultItem> {
-            override fun onFailure(call: Call<SearchResultItem>?, t: Throwable?) {
-                onFailure(call as Call<*>)
+        activity_search_edittext.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
             }
 
-            override fun onResponse(call: Call<SearchResultItem>?, response: Response<SearchResultItem>?) {
-                when {
-                    response?.code() == 200 -> {
-                        Toast.makeText(applicationContext, response.body()?.siteID, Toast.LENGTH_SHORT).show()
-                    }
-                    else -> {
-                        processRequest(response as Response<*>)
-                    }
-                }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                validateSearchInputs()
             }
         })
+
+        activity_search_search_button.setOnClickListener {
+            navigateToActivityResults(activity_search_edittext.text.toString())
+        }
+
+        validateSearchInputs()
     }
 
-    override fun onStop() {
-        super.onStop()
-        service?.cancel()
+
+    fun validateSearchInputs() {
+        activity_search_search_button.isEnabled = activity_search_edittext.text.isNotEmpty()
+    }
+
+    private fun navigateToActivityResults(searchString: String) {
+        val intent = Intent(this, ActivityResults::class.java)
+        intent.putExtra(SEARCH_STRING, searchString)
+        startActivity(intent)
     }
 
 }
