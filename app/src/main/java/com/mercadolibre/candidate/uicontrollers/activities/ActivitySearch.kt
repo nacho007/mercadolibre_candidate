@@ -5,8 +5,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
+import android.widget.ArrayAdapter
 import com.mercadolibre.candidate.R
 import com.mercadolibre.candidate.constants.SEARCH_STRING
+import com.mercadolibre.candidate.preferences.Singleton
 import kotlinx.android.synthetic.main.activity_search.*
 
 
@@ -33,6 +36,15 @@ class ActivitySearch : ActivityBase() {
         }
 
         validateSearchInputs()
+
+        activity_search_edittext.threshold = 1
+
+        val items = arrayOf("Car", "House", "Dog", "Chromecast", "Shirt")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, items)
+        activity_search_edittext.setAdapter(adapter)
+
+        val hole = Singleton.getInstance(this).stringValue
+        Log.e(tag, hole)
     }
 
 

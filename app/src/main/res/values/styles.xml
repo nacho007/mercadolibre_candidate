@@ -6,15 +6,15 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="editTextStyle">@style/EditTextStyle</item>
-        <item name="android:buttonStyle">@style/ButtonStyle</item>
+        <item name="autoCompleteTextViewStyle">@style/AutoCompleteEditTextStyle</item>
+        <item name="buttonStyle">@style/ButtonStyle</item>
     </style>
 
 
     <!--EditText-->
 
-    <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
-        <item name="android:gravity">center</item>
+    <style name="AutoCompleteEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:gravity">start</item>
         <item name="android:textColor">@color/colorBlack</item>
         <item name="android:textSize">@dimen/edittext_size</item>
         <item name="android:textColorHint">@color/colorAccent</item>

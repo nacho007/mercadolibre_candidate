@@ -14,4 +14,6 @@
     <dimen name="edittext_size">@dimen/text_size_3</dimen>
     <dimen name="button_text_size">@dimen/text_size_3</dimen>
 
+    <dimen name="image_size">90dp</dimen>
+
 </resources>
