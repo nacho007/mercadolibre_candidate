@@ -1,10 +1,10 @@
-package com.mercadolibre.candidate
+package com.mercadolibre.candidate.activities
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.mercadolibre.candidate.R
 
-
-class MainActivity : AppCompatActivity() {
+class ResultsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
