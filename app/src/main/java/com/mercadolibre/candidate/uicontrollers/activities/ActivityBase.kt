@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
-import com.google.gson.Gson
 import com.mercadolibre.candidate.R
 import com.mercadolibre.candidate.constants.BASE_URL
 import okhttp3.OkHttpClient
-import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Response
@@ -18,8 +16,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 open class ActivityBase : AppCompatActivity() {
 
     lateinit var retrofit: Retrofit
-    var service: Call<ResponseBody>? = null
-    val gSon: Gson = Gson()
     var tag = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +40,7 @@ open class ActivityBase : AppCompatActivity() {
         Toast.makeText(applicationContext, getString(R.string.mobile_internet_error), Toast.LENGTH_SHORT).show()
     }
 
-    fun onFailure(call: Call<ResponseBody>?) {
+    fun onFailure(call: Call<*>?) {
         if (call?.isCanceled == true) {
             Log.e(tag, getString(R.string.mobile_service_cancelled))
         } else {
@@ -52,13 +48,13 @@ open class ActivityBase : AppCompatActivity() {
         }
     }
 
-    fun processRequest(responseBody: Response<ResponseBody>?) {
+    fun processRequest(responseBody: Response<*>?) {
         when {
             responseBody?.code() == 404 -> {
                 Toast.makeText(applicationContext, getString(R.string.mobile_404), Toast.LENGTH_SHORT).show()
             }
             else -> {
-                Toast.makeText(applicationContext, "Algun error", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, getString(R.string.mobile_generic_error), Toast.LENGTH_SHORT).show()
             }
         }
     }

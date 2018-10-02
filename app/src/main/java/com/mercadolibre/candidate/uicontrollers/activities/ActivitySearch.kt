@@ -2,16 +2,19 @@ package com.mercadolibre.candidate.uicontrollers.activities
 
 
 import android.os.Bundle
+import android.widget.Toast
 import com.mercadolibre.candidate.R
 import com.mercadolibre.candidate.constants.SITE_ID
+import com.mercadolibre.candidate.model.SearchResultItem
 import com.mercadolibre.candidate.services.Service
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
 class ActivitySearch : ActivityBase() {
+
+    var service: Call<SearchResultItem>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,26 +26,18 @@ class ActivitySearch : ActivityBase() {
 
         service = retrofit.create<Service>(Service::class.java).listSearchResultItems(SITE_ID, "chromecast")
 
-        service?.enqueue(object : Callback<ResponseBody> {
-            override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
-                onFailure(call)
+        service?.enqueue(object : Callback<SearchResultItem> {
+            override fun onFailure(call: Call<SearchResultItem>?, t: Throwable?) {
+                onFailure(call as Call<*>)
             }
 
-            override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
+            override fun onResponse(call: Call<SearchResultItem>?, response: Response<SearchResultItem>?) {
                 when {
                     response?.code() == 200 -> {
-//                        val hola = response.body()?.contentType()?..toString()
-//                        val hola = response.body().
-
-//                        val jsonObject = JSONObject(response.body() as SearchResultItem)
-//                        val jsonString = jsonObject.toString()
-
-//                        val searchResultItem = gSon.fromJson(hola, SearchResultItem::class.java)
-//                        Toast.makeText(applicationContext, searchResultItem.siteID, Toast.LENGTH_SHORT).show()
-//                        Toast.makeText(applicationContext, "sadf", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, response.body()?.siteID, Toast.LENGTH_SHORT).show()
                     }
                     else -> {
-                        processRequest(response)
+                        processRequest(response as Response<*>)
                     }
                 }
             }
