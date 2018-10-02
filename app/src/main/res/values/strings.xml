@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">MercadoLibreCandidate</string>
+    <!--<string name="app_name">MercadoLibreCandidate</string>-->
+    <string name="app_name">Test</string>
+    <string name="mobile_internet_error">"Internet connection not detected. Please check your connection and try again."</string>
+    <string name="mobile_service_cancelled">"Service cancelled"</string>
+    <string name="mobile_404">"404 - Not found"</string>
 </resources>

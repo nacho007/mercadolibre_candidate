@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.mercadolibre.candidate.activities.SearchActivity">
+        <activity android:name="com.mercadolibre.candidate.uicontrollers.activities.ActivitySearch">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,8 +21,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.mercadolibre.candidate.activities.ResultsActivity" />
-        <activity android:name="com.mercadolibre.candidate.activities.DetailActivity" />
+        <activity android:name="com.mercadolibre.candidate.uicontrollers.activities.ActivityResults" />
+        <activity android:name="com.mercadolibre.candidate.uicontrollers.activities.ActivityDetail" />
 
     </application>
 
