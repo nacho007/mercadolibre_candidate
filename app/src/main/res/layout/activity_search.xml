@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.mercadolibre.candidate.uicontrollers.activities.ActivitySearch">
 
-    <android.support.v7.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/activity_search_icon"
         android:layout_width="@dimen/image_size"
         android:layout_height="@dimen/image_size"
@@ -42,8 +42,7 @@
             android:inputType="textCapSentences"
             android:maxLines="1" />
 
-
-        <android.support.v7.widget.AppCompatButton
+        <Button
             android:id="@+id/activity_search_search_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
