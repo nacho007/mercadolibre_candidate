@@ -3,11 +3,11 @@ package com.mercadolibre.candidate.uicontrollers.activities
 import android.os.Bundle
 import android.widget.Toast
 import com.mercadolibre.candidate.R
+import com.mercadolibre.candidate.adapters.AdapterProduct
 import com.mercadolibre.candidate.constants.SEARCH_STRING
 import com.mercadolibre.candidate.constants.SITE_ID
 import com.mercadolibre.candidate.model.SearchResultItem
 import com.mercadolibre.candidate.services.Service
-import kotlinx.android.synthetic.main.activity_results.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,19 +15,20 @@ import retrofit2.Response
 class ActivityResults : ActivityBase() {
 
     var service: Call<SearchResultItem>? = null
+    var searchResult = ""
+
+    private var adapterProduct: AdapterProduct? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_results)
-
-        val searchResult = intent.getStringExtra(SEARCH_STRING)
-        activity_results_textview.text = searchResult
+        searchResult = intent.getStringExtra(SEARCH_STRING)
     }
 
     override fun onStart() {
         super.onStart()
 
-        service = retrofit.create<Service>(Service::class.java).listSearchResultItems(SITE_ID, "chromecast")
+        service = retrofit.create<Service>(Service::class.java).listSearchResultItems(SITE_ID, searchResult)
 
         service?.enqueue(object : Callback<SearchResultItem> {
             override fun onFailure(call: Call<SearchResultItem>?, t: Throwable?) {

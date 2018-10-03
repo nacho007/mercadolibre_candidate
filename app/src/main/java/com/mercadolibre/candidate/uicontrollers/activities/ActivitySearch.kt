@@ -22,6 +22,8 @@ class ActivitySearch : ActivityBase() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+
         activity_search_edittext.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
             }
