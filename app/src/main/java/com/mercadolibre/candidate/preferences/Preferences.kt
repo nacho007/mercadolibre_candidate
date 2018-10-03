@@ -1,21 +1,29 @@
 package com.mercadolibre.candidate.preferences
 
+import android.content.Context
 import android.content.SharedPreferences
+import com.mercadolibre.candidate.R
 
-class Preferences private constructor() {
+class Preferences private constructor(context: Context?) {
+
+    private var sharedPref: SharedPreferences? = null
 
     init {
-        println("This ($this) is a singleton")
-//        val sharedPref = activity.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        sharedPref = context?.getSharedPreferences(
+                context.getString(R.string.preference_file_key), Context.MODE_PRIVATE)
     }
 
-    private object Holder {
-        val INSTANCE = Preferences()
+    companion object : SingletonHolder<Preferences, Context>(::Preferences)
+
+    fun saveSearchString(context: Context?, stringSearch: Set<String>?) {
+        with(sharedPref?.edit()) {
+            this?.clear()
+            this?.putStringSet(context?.getString(R.string.preference_search_strings), stringSearch)?.apply()
+        }
     }
 
-    companion object {
-        val instance: Preferences by lazy { Holder.INSTANCE }
+    fun getSearchString(context: Context?): MutableSet<String>? {
+        return sharedPref?.getStringSet(context?.getString(R.string.preference_search_strings), mutableSetOf()) as MutableSet
     }
 
-    val sharedPref: SharedPreferences? = null
 }

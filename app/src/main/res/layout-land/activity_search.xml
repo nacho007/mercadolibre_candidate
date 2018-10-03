@@ -50,7 +50,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="@dimen/margin"
             android:layout_marginEnd="8dp"
-            android:text="@string/mobile_search" />
+            android:text="@string/mobile_search_button" />
 
     </LinearLayout>
 

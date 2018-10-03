@@ -1,8 +1,11 @@
 <resources>
     <!--<string name="app_name">MercadoLibreCandidate</string>-->
     <string name="app_name">Test</string>
-    <string name="mobile_search_hint">Search products and more...</string>
-    <string name="mobile_search">Search</string>
+    <string name="preference_file_key">mercadolibre_candidate</string>
+    <string name="preference_search_strings">search_strings</string>
+
+    <string name="mobile_search_hint">Search products and more…</string>
+    <string name="mobile_search_button">Search</string>
     <string name="mobile_internet_error">"Internet connection not detected. Please check your connection and try again."</string>
     <string name="mobile_generic_error">"We are experiencing difficulties with the system. Please try again later."</string>
     <string name="mobile_service_cancelled">"Service cancelled"</string>
