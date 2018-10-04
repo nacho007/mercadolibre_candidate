@@ -4,8 +4,10 @@
     <string name="preference_file_key">mercadolibre_candidate</string>
     <string name="preference_search_strings">search_strings</string>
 
-    <string name="product_item_price">%1$s %2$f</string>
+    <string name="product_item_price">%1$s %2$s</string>
     <string name="activity_results_title">Resultados</string>
+
+    <string name="product_">Resultados</string>
 
     <string name="mobile_search_hint">Search products and more…</string>
     <string name="mobile_search_button">Search</string>

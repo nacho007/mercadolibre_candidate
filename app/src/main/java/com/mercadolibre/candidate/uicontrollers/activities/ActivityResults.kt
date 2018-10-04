@@ -1,21 +1,23 @@
 package com.mercadolibre.candidate.uicontrollers.activities
 
-import android.graphics.PorterDuff
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.mercadolibre.candidate.R
 import com.mercadolibre.candidate.adapters.AdapterProduct
 import com.mercadolibre.candidate.adapters.dividers.SimpleDividerItemDecoration
 import com.mercadolibre.candidate.adapters.helpers.ListItemBackgroundBuilder
+import com.mercadolibre.candidate.constants.CONDITION
 import com.mercadolibre.candidate.constants.SEARCH_STRING
 import com.mercadolibre.candidate.constants.SITE_ID
 import com.mercadolibre.candidate.interfaces.OnProductItemClickListener
 import com.mercadolibre.candidate.model.ProductItem
 import com.mercadolibre.candidate.model.SearchResultItem
 import com.mercadolibre.candidate.services.Service
+import com.mercadolibre.candidate.utils.ConditionMapper
 import kotlinx.android.synthetic.main.activity_results.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -34,12 +36,10 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
         searchResult = intent.getStringExtra(SEARCH_STRING)
 
         toolbar?.title = getString(R.string.activity_results_title)
-//        toolbar.navigationIcon?.setColorFilter(ContextCompat.getColor(this, R.color.colorWhite), PorterDuff.Mode.SRC_IN)
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-
 
         activity_results_recycler_view.setHasFixedSize(true)
         activity_results_recycler_view.layoutManager = LinearLayoutManager(this)
@@ -90,6 +90,18 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
 
         if (searchResultItem?.results?.size?.compareTo(0) != 0) {
             activity_results_textview_empty_list.visibility = View.GONE
+
+            try {
+
+                for (i in 0 until searchResultItem?.availableFilters?.size!!) {
+                    if (searchResultItem.availableFilters[i].id == CONDITION) {
+                        ConditionMapper.instance.setValues(searchResultItem.availableFilters[i].values)
+                    }
+                }
+
+            } catch (exception: Exception) {
+                Log.e(tag, exception.toString())
+            }
 
             ListItemBackgroundBuilder.instance.assignBackgroundPositions(searchResultItem?.results as ArrayList<*>)
             adapterProduct = AdapterProduct(searchResultItem.results, this)

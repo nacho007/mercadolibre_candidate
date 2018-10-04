@@ -15,7 +15,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorControlNormal">@color/colorWhite</item>
+        <item name="colorControlNormal">@color/colorAccent</item>
         <item name="autoCompleteTextViewStyle">@style/AutoCompleteEditTextStyle</item>
         <item name="buttonStyle">@style/ButtonStyle</item>
         <item name="android:textViewStyle">@style/TextViewStyle</item>
@@ -25,10 +25,10 @@
     <!--Toolbar-->
 
     <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
-        <item name="titleTextColor">@color/colorWhite</item>
+        <item name="titleTextColor">@color/colorAccent</item>
         <item name="android:textSize">@dimen/text_size_3</item>
         <item name="android:gravity">start</item>
-        <item name="android:fontFamily">@font/robotoregular</item>
+        <item name="android:fontFamily">@font/robotomedium</item>
     </style>
 
     <!--TextView-->
@@ -42,6 +42,11 @@
 
     <style name="TextViewStyleBold" parent="TextViewStyle">
         <item name="android:fontFamily">@font/robotobold</item>
+    </style>
+
+    <style name="TextViewStyleCondition" parent="TextViewStyle">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/robotoregular</item>
     </style>
 
     <!--EditText-->
