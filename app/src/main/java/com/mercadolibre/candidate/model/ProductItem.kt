@@ -13,4 +13,4 @@ class ProductItem(
         @SerializedName("condition") var condition: String,
         @SerializedName("thumbnail") var thumbnail: String,
         @SerializedName("accepts_mercadopago") var acceptsMercadopago: Boolean
-) : Serializable
+) : Serializable, Base()

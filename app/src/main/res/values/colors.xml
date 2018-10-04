@@ -6,6 +6,7 @@
 
     <color name="colorBlack">#000000</color>
     <color name="colorWhite">#ffffff</color>
+    <color name="colorGray">#e1e1e1</color>
     <color name="colorShapeShadow">#32c3c3c3</color>
 
     <color name="colorButton">@color/colorAccent</color>

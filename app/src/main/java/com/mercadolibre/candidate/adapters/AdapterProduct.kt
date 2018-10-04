@@ -6,8 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.mercadolibre.candidate.R
+import com.mercadolibre.candidate.adapters.helpers.ListItemBackgroundBuilder
 import com.mercadolibre.candidate.interfaces.OnProductItemClickListener
 import com.mercadolibre.candidate.model.ProductItem
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.adapter_product_item.view.*
 
 class AdapterProduct(var productItem: ArrayList<ProductItem>, var listener: OnProductItemClickListener) : RecyclerView.Adapter<AdapterProduct.ProductViewHolder>() {
 
@@ -29,23 +32,15 @@ class AdapterProduct(var productItem: ArrayList<ProductItem>, var listener: OnPr
 
     class ProductViewHolder(val v: View) : RecyclerView.ViewHolder(v) {
 
-        val context: Context = v.context
+        private val context: Context = v.context
 
         fun setItem(productItem: ProductItem) {
+            v.adapter_product_item_text_view_title.text = productItem.title
+            v.adapter_product_item_text_view_price.text = context.getString(R.string.product_item_price, productItem.currencyId, productItem.price)
+            v.adapter_product_item_text_view_condition.text = productItem.condition
 
-//            v.row_bank_textview_name.text = bank.name
-//
-//            GlideHelper.getInstance().setImage(context, v.row_bank_imageview_flag, BANKS_IMAGE_BASE_URL + bank.image,
-//                    GlideHelper.PlaceHolderType.CAMERA, false)
-//
-//            v.row_bank_imageview_tick.visibility = if (bank.selected) {
-//                View.VISIBLE
-//            } else {
-//                View.GONE
-//            }
-//
-//            ListItemBackgroundBuilder.getInstance(context).setBackgroundInadapter(bank, v.row_bank_relativelayout)
-
+            Picasso.get().load(productItem.thumbnail).into(v.adapter_product_item_image_view)
+            ListItemBackgroundBuilder.instance.setBackgroundInAdapter(productItem, v.adapter_product_item_constraintlayout)
         }
 
         fun bind(productItem: ProductItem, listener: OnProductItemClickListener) {
