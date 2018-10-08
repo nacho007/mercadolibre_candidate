@@ -39,7 +39,7 @@ class ListItemBackgroundBuilder private constructor() {
         }
     }
 
-    fun assignBackgroundPositions(arrayList: ArrayList<*>) {
+    fun assignPortraitBackgroundPositions(arrayList: ArrayList<*>) {
         when {
             arrayList.size == 1 -> (arrayList[0] as Base).background = ALONE
             arrayList.size == 2 -> {
@@ -53,6 +53,14 @@ class ListItemBackgroundBuilder private constructor() {
                     else -> (arrayList[i] as Base).background = MIDDLE
                 }
 
+            }
+        }
+    }
+
+    fun assignLandscapeBackgroundPositions(arrayList: ArrayList<*>) {
+        when {
+            arrayList.size > 0 -> for (i in arrayList.indices) {
+                (arrayList[i] as Base).background = ALONE
             }
         }
     }
