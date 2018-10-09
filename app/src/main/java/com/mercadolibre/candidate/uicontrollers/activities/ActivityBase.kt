@@ -6,6 +6,9 @@ import android.util.Log
 import android.widget.Toast
 import com.mercadolibre.candidate.R
 import com.mercadolibre.candidate.constants.BASE_URL
+import com.mercadolibre.candidate.constants.DIALOG_ERROR
+import com.mercadolibre.candidate.interfaces.OnDialogClickListener
+import com.mercadolibre.candidate.uicontrollers.dialogs.DialogFragmentError
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -13,9 +16,10 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-open class ActivityBase : AppCompatActivity() {
+open class ActivityBase : AppCompatActivity(), OnDialogClickListener {
 
     lateinit var retrofit: Retrofit
+    private var dialogError: DialogFragmentError? = null
     var tag = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +33,9 @@ open class ActivityBase : AppCompatActivity() {
         val httpClient = OkHttpClient.Builder()
         httpClient.addInterceptor(logging)
 
+        dialogError = DialogFragmentError()
+        dialogError?.onDialogClickListener = this
+
         retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -36,15 +43,11 @@ open class ActivityBase : AppCompatActivity() {
                 .build()
     }
 
-    fun noInternetConnection() {
-        Toast.makeText(applicationContext, getString(R.string.mobile_internet_error), Toast.LENGTH_SHORT).show()
-    }
-
     fun onFailure(call: Call<*>?) {
         if (call?.isCanceled == true) {
             Log.e(tag, getString(R.string.mobile_service_cancelled))
         } else {
-            noInternetConnection()
+            showDialogError()
         }
     }
 
@@ -59,5 +62,20 @@ open class ActivityBase : AppCompatActivity() {
         }
     }
 
+    private fun showDialogError() {
+        if (supportFragmentManager.findFragmentByTag(DIALOG_ERROR) != null) {
+            val frag = supportFragmentManager.findFragmentByTag(DIALOG_ERROR) as DialogFragmentError?
+            frag?.onDialogClickListener = this
+        } else {
+            dialogError?.show(supportFragmentManager, DIALOG_ERROR)
+        }
+    }
 
+    override fun onCancel() {
+
+    }
+
+    override fun onRetry() {
+
+    }
 }

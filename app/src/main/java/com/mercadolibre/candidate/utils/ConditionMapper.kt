@@ -22,7 +22,7 @@ class ConditionMapper private constructor() {
         valuesArrayList = values
     }
 
-    fun matchValue(value: String): String? {
+    fun matchValue(value: String?): String? {
         return when (valuesArrayList) {
             null -> value
             else -> {

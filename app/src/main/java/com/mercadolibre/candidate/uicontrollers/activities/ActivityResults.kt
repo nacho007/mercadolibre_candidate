@@ -21,6 +21,7 @@ import com.mercadolibre.candidate.model.SearchResultItem
 import com.mercadolibre.candidate.services.Service
 import com.mercadolibre.candidate.utils.ConditionMapper
 import kotlinx.android.synthetic.main.activity_results.*
+import kotlinx.android.synthetic.main.layout_retry.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -58,31 +59,18 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
 
         activity_results_textview_empty_list.visibility = View.GONE
         adapter_product_item_progress_bar.visibility = View.GONE
+
+        layout_retry_button.setOnClickListener {
+            layout_retry_constraint_layout.visibility = View.GONE
+            callService()
+        }
     }
 
     override fun onStart() {
         super.onStart()
 
         if (!calledService) {
-            service = retrofit.create<Service>(Service::class.java).listSearchResultItems(SITE_ID, searchResult)
-            adapter_product_item_progress_bar.visibility = View.VISIBLE
-
-            service?.enqueue(object : Callback<SearchResultItem> {
-                override fun onFailure(call: Call<SearchResultItem>?, t: Throwable?) {
-                    onFailure(call as Call<*>)
-                }
-
-                override fun onResponse(call: Call<SearchResultItem>?, response: Response<SearchResultItem>?) {
-                    when {
-                        response?.code() == 200 -> {
-                            processServiceResponse(response.body())
-                        }
-                        else -> {
-                            processRequest(response as Response<*>)
-                        }
-                    }
-                }
-            })
+            callService()
         }
     }
 
@@ -102,6 +90,28 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
         outState?.putParcelableArrayList(PRODUCT_ITEM_ARRAY, productsArrayList)
         outState?.putParcelableArrayList(FILTER_ARRAY, productsArrayList)
         outState?.putBoolean(CALLED_SERVICE, calledService)
+    }
+
+    private fun callService() {
+        service = retrofit.create<Service>(Service::class.java).listSearchResultItems(SITE_ID, searchResult)
+        adapter_product_item_progress_bar.visibility = View.VISIBLE
+
+        service?.enqueue(object : Callback<SearchResultItem> {
+            override fun onFailure(call: Call<SearchResultItem>?, t: Throwable?) {
+                onFailure(call as Call<*>)
+            }
+
+            override fun onResponse(call: Call<SearchResultItem>?, response: Response<SearchResultItem>?) {
+                when {
+                    response?.code() == 200 -> {
+                        processServiceResponse(response.body())
+                    }
+                    else -> {
+                        processRequest(response as Response<*>)
+                    }
+                }
+            }
+        })
     }
 
     private fun setRecyclerView() {
@@ -150,29 +160,37 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
         activity_results_textview_empty_list.visibility = View.GONE
 
         try {
-
             for (i in 0 until availableFilters!!.size) {
                 if (availableFilters!![i].id == CONDITION) {
                     ConditionMapper.instance.setValues(availableFilters!![i].values)
                 }
             }
-
         } catch (exception: Exception) {
             Log.e(tag, exception.toString())
         }
 
         val orientation = resources.configuration.orientation
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            ListItemBackgroundBuilder.instance.assignLandscapeBackgroundPositions(productsArrayList as ArrayList<ProductItem>)
+            ListItemBackgroundBuilder.instance.assignLandscapeBackgroundPositions(productsArrayList)
         } else {
-            ListItemBackgroundBuilder.instance.assignPortraitBackgroundPositions(productsArrayList as ArrayList<ProductItem>)
+            ListItemBackgroundBuilder.instance.assignPortraitBackgroundPositions(productsArrayList)
         }
 
-        adapterProduct = AdapterProduct(productsArrayList!!, this)
+        adapterProduct = AdapterProduct(productsArrayList, this)
         activity_results_recycler_view.adapter = adapterProduct
     }
 
-    override fun onProductItemClick(productItem: ProductItem) {
-        Toast.makeText(this, productItem.title, Toast.LENGTH_SHORT).show()
+    override fun onProductItemClick(productItem: ProductItem?) {
+        Toast.makeText(this, productItem?.title, Toast.LENGTH_SHORT).show()
     }
+
+    override fun onCancel() {
+        adapter_product_item_progress_bar.visibility = View.GONE
+        layout_retry_constraint_layout.visibility = View.VISIBLE
+    }
+
+    override fun onRetry() {
+        callService()
+    }
+
 }

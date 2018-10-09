@@ -8,6 +8,7 @@ const val PRODUCT_ITEM_ARRAY = "product_item_array"
 const val FILTER_ARRAY = "filter_array"
 const val CALLED_SERVICE = "called_service"
 
+const val DIALOG_ERROR = "dialog_error"
 
 const val TOP = "top"
 const val BOTTOM = "bottom"

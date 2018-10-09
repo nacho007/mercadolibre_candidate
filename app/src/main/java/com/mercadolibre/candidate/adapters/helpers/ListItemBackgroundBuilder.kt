@@ -30,8 +30,8 @@ class ListItemBackgroundBuilder private constructor() {
         val instance: ListItemBackgroundBuilder by lazy { Holder.INSTANCE }
     }
 
-    fun setBackgroundInAdapter(base: Base, view: View) {
-        when (base.background) {
+    fun setBackgroundInAdapter(base: Base?, view: View) {
+        when (base?.background) {
             TOP -> view.setBackgroundResource(itemTopBackground)
             MIDDLE -> view.setBackgroundResource(itemMiddleBackground)
             BOTTOM -> view.setBackgroundResource(itemBottomBackground)
@@ -39,8 +39,9 @@ class ListItemBackgroundBuilder private constructor() {
         }
     }
 
-    fun assignPortraitBackgroundPositions(arrayList: ArrayList<*>) {
+    fun assignPortraitBackgroundPositions(arrayList: ArrayList<*>?) {
         when {
+            arrayList == null -> return
             arrayList.size == 1 -> (arrayList[0] as Base).background = ALONE
             arrayList.size == 2 -> {
                 (arrayList[0] as Base).background = TOP
@@ -57,8 +58,9 @@ class ListItemBackgroundBuilder private constructor() {
         }
     }
 
-    fun assignLandscapeBackgroundPositions(arrayList: ArrayList<*>) {
+    fun assignLandscapeBackgroundPositions(arrayList: ArrayList<*>?) {
         when {
+            arrayList == null -> return
             arrayList.size > 0 -> for (i in arrayList.indices) {
                 (arrayList[i] as Base).background = ALONE
             }

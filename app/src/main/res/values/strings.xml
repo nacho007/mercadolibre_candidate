@@ -9,6 +9,9 @@
 
     <string name="product_">Resultados</string>
 
+    <string name="mobile_error">Error</string>
+    <string name="mobile_retry">Retry</string>
+    <string name="mobile_cancel">Cancel</string>
     <string name="mobile_search_hint">Search products and more…</string>
     <string name="mobile_search_button">Search</string>
     <string name="mobile_no_data">"No data to display"</string>
