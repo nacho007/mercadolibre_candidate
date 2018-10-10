@@ -63,6 +63,18 @@ open class ActivityBase : AppCompatActivity(), OnDialogClickListener {
     }
 
     private fun showDialogError() {
+        // DialogFragment.show() will take care of adding the fragment
+        // in a transaction.  We also want to remove any currently showing
+        // dialog, so make our own transaction and take care of that here.
+        val ft = supportFragmentManager.beginTransaction()
+        val prev = supportFragmentManager.findFragmentByTag(DIALOG_ERROR)
+        if (prev != null) {
+            ft.remove(prev)
+        }
+        ft.addToBackStack(null)
+        ft.commit()
+
+        // Create and show the dialog.
         dialogError?.show(supportFragmentManager, DIALOG_ERROR)
     }
 

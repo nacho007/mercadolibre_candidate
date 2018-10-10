@@ -20,12 +20,6 @@ class DialogFragmentError() : AppCompatDialogFragment() {
         return R.style.DialogTheme
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // retain this fragment when activity is re-initialized
-        retainInstance = true
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.dialog_error, container)
     }
