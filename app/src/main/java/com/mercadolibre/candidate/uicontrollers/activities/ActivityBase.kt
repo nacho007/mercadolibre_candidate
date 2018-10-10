@@ -43,7 +43,7 @@ open class ActivityBase : AppCompatActivity(), OnDialogClickListener {
                 .build()
     }
 
-    fun onFailure(call: Call<*>?) {
+    open fun onFailure(call: Call<*>?) {
         if (call?.isCanceled == true) {
             Log.e(tag, getString(R.string.mobile_service_cancelled))
         } else {
@@ -63,12 +63,7 @@ open class ActivityBase : AppCompatActivity(), OnDialogClickListener {
     }
 
     private fun showDialogError() {
-        if (supportFragmentManager.findFragmentByTag(DIALOG_ERROR) != null) {
-            val frag = supportFragmentManager.findFragmentByTag(DIALOG_ERROR) as DialogFragmentError?
-            frag?.onDialogClickListener = this
-        } else {
-            dialogError?.show(supportFragmentManager, DIALOG_ERROR)
-        }
+        dialogError?.show(supportFragmentManager, DIALOG_ERROR)
     }
 
     override fun onCancel() {

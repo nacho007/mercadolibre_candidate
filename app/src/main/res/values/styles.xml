@@ -106,6 +106,7 @@
 
     <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textViewStyle">@style/TextViewStyle</item>
         <item name="windowMinWidthMajor">90%</item>
         <item name="windowMinWidthMinor">90%</item>
     </style>

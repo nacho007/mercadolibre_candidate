@@ -62,7 +62,17 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
 
         layout_retry_button.setOnClickListener {
             layout_retry_constraint_layout.visibility = View.GONE
-            callService()
+            callService(View.VISIBLE)
+        }
+
+        activity_results_swipe_layout.setColorSchemeResources(
+                R.color.colorAccent,
+                R.color.colorAccent,
+                R.color.colorAccent)
+
+        activity_results_swipe_layout.setOnRefreshListener {
+            layout_retry_constraint_layout.visibility = View.GONE
+            callService(View.GONE)
         }
     }
 
@@ -70,7 +80,7 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
         super.onStart()
 
         if (!calledService) {
-            callService()
+            callService(View.VISIBLE)
         }
     }
 
@@ -88,17 +98,18 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         outState?.putParcelableArrayList(PRODUCT_ITEM_ARRAY, productsArrayList)
-        outState?.putParcelableArrayList(FILTER_ARRAY, productsArrayList)
+        outState?.putParcelableArrayList(FILTER_ARRAY, availableFilters)
         outState?.putBoolean(CALLED_SERVICE, calledService)
     }
 
-    private fun callService() {
+    private fun callService(progressBarVisibility: Int) {
         service = retrofit.create<Service>(Service::class.java).listSearchResultItems(SITE_ID, searchResult)
-        adapter_product_item_progress_bar.visibility = View.VISIBLE
+        adapter_product_item_progress_bar.visibility = progressBarVisibility
 
         service?.enqueue(object : Callback<SearchResultItem> {
             override fun onFailure(call: Call<SearchResultItem>?, t: Throwable?) {
                 onFailure(call as Call<*>)
+
             }
 
             override fun onResponse(call: Call<SearchResultItem>?, response: Response<SearchResultItem>?) {
@@ -140,31 +151,41 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
         activity_results_recycler_view.layoutManager = layoutManager
     }
 
+    override fun onFailure(call: Call<*>?) {
+        super.onFailure(call)
+        activity_results_swipe_layout.isRefreshing = false
+        activity_results_swipe_layout.isEnabled = true
+    }
+
     fun processServiceResponse(searchResultItem: SearchResultItem?) {
         calledService = true
+        activity_results_swipe_layout.isRefreshing = false
+        activity_results_swipe_layout.isEnabled = true
         adapter_product_item_progress_bar.visibility = View.GONE
 
         if (searchResultItem?.results?.size?.compareTo(0) != 0) {
             productsArrayList = searchResultItem?.results
             availableFilters = searchResultItem?.availableFilters
 
+            activity_results_recycler_view.visibility = View.VISIBLE
+            activity_results_textview_empty_list.visibility = View.GONE
             setProductItemAdapter()
         } else {
             productsArrayList = null
             activity_results_textview_empty_list.visibility = View.VISIBLE
+            activity_results_recycler_view.visibility = View.GONE
         }
     }
 
 
     private fun setProductItemAdapter() {
-        activity_results_textview_empty_list.visibility = View.GONE
-
         try {
-            for (i in 0 until availableFilters!!.size) {
-                if (availableFilters!![i].id == CONDITION) {
-                    ConditionMapper.instance.setValues(availableFilters!![i].values)
+            availableFilters?.forEach {
+                if (it.id == CONDITION) {
+                    ConditionMapper.instance.setValues(it.values)
                 }
             }
+
         } catch (exception: Exception) {
             Log.e(tag, exception.toString())
         }
@@ -186,11 +207,21 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
 
     override fun onCancel() {
         adapter_product_item_progress_bar.visibility = View.GONE
-        layout_retry_constraint_layout.visibility = View.VISIBLE
+        activity_results_swipe_layout.isRefreshing = false
+        activity_results_swipe_layout.isEnabled = true
+
+        if (productsArrayList.orEmpty().isEmpty()) {
+            layout_retry_constraint_layout.visibility = View.VISIBLE
+        } else {
+            activity_results_recycler_view.visibility = View.VISIBLE
+            layout_retry_constraint_layout.visibility = View.GONE
+        }
+
     }
 
     override fun onRetry() {
-        callService()
+        activity_results_recycler_view.visibility = View.GONE
+        callService(View.VISIBLE)
     }
 
 }
