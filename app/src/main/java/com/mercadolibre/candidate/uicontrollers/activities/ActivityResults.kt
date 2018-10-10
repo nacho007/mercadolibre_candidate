@@ -201,10 +201,6 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
         activity_results_recycler_view.adapter = adapterProduct
     }
 
-    override fun onProductItemClick(productItem: ProductItem?) {
-        Toast.makeText(this, productItem?.title, Toast.LENGTH_SHORT).show()
-    }
-
     override fun onCancel() {
         adapter_product_item_progress_bar.visibility = View.GONE
         activity_results_swipe_layout.isRefreshing = false
@@ -224,4 +220,7 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
         callService(View.VISIBLE)
     }
 
+    override fun onProductItemClick(productItem: ProductItem?) {
+        Toast.makeText(this, productItem?.title, Toast.LENGTH_SHORT).show()
+    }
 }

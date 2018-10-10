@@ -26,15 +26,16 @@ open class ActivityBase : AppCompatActivity(), OnDialogClickListener {
         super.onCreate(savedInstanceState)
 
         tag = this.javaClass.simpleName
-
+        dialogError?.onDialogClickListener = this
         val logging = HttpLoggingInterceptor()
         logging.level = HttpLoggingInterceptor.Level.BODY
 
         val httpClient = OkHttpClient.Builder()
         httpClient.addInterceptor(logging)
 
-        dialogError = DialogFragmentError()
-        dialogError?.onDialogClickListener = this
+        if (supportFragmentManager.findFragmentByTag(DIALOG_ERROR) != null) {
+            (supportFragmentManager.findFragmentByTag(DIALOG_ERROR) as DialogFragmentError).onDialogClickListener = this
+        }
 
         retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -75,6 +76,8 @@ open class ActivityBase : AppCompatActivity(), OnDialogClickListener {
         ft.commit()
 
         // Create and show the dialog.
+        dialogError = DialogFragmentError()
+        dialogError?.onDialogClickListener = this
         dialogError?.show(supportFragmentManager, DIALOG_ERROR)
     }
 
