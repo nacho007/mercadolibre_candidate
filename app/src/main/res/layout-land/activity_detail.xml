@@ -13,33 +13,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/activity_detail_image_view_product"
+        android:layout_width="219dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin"
+        android:adjustViewBounds="true"
+        android:transitionName="@string/product_image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/activity_detail_scroll_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarDetail"
+        tools:srcCompat="@tools:sample/backgrounds/scenic[1]"
+        tools:targetApi="lollipop" />
+
     <ScrollView
         android:id="@+id/activity_detail_scroll_view"
-        android:layout_width="match_parent"
+        android:layout_width="250dp"
         android:layout_height="0dp"
+        android:layout_margin="@dimen/margin"
+        app:layout_constrainedWidth="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/activity_detail_image_view_product"
         app:layout_constraintTop_toBottomOf="@+id/toolbarDetail">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:padding="@dimen/padding">
 
-            <ImageView
-                android:id="@+id/activity_detail_image_view_product"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:transitionName="@string/product_image"
-                tools:srcCompat="@tools:sample/backgrounds/scenic[1]"
-                tools:targetApi="lollipop" />
-
             <FrameLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
                 <ProgressBar
@@ -53,21 +60,30 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
-                    android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/activity_detail_scroll_view"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_marginBottom="8dp" />
 
                 <TextView
                     android:id="@+id/activity_detail_text_view_description"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin"
-                    tools:text="This is a description for your item." />
+                    tools:text="This is a description for your item. asdfkjasldkjfaksljdflaksjflkasjdflkasjdflkjaslkdfjaslkfasdf" />
             </FrameLayout>
 
         </LinearLayout>
     </ScrollView>
+
+    <android.support.constraint.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="left" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
 
 </android.support.constraint.ConstraintLayout>

@@ -13,7 +13,7 @@
         android:layout_height="@dimen/image_size"
         android:layout_marginEnd="@dimen/margin"
         android:layout_marginRight="@dimen/margin"
-        android:transitionName="product_image"
+        android:transitionName="@string/product_image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

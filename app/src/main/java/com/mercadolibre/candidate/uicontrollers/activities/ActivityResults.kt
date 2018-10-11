@@ -229,7 +229,7 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
 
         var options: ActivityOptionsCompat? = null
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,  view, "product_image")
+            options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, getString(R.string.product_image))
         }
 
         startActivity(intent, options?.toBundle())
