@@ -115,6 +115,7 @@ class ActivityDetail : ActivityBase() {
                 when {
                     response?.code() == 200 -> {
                         calledServiceDescription = true
+                        cancelDialogError()
                         itemDescription = response.body()?.plainText
                         activity_detail_text_view_description.text = itemDescription
                         activity_detail_progress_bar.visibility = View.GONE
@@ -142,6 +143,7 @@ class ActivityDetail : ActivityBase() {
                 when {
                     response?.code() == 200 -> {
                         calledServicePictures = true
+                        cancelDialogError()
 
                         val maxSize = response.body()?.maxSize
                         val productImageArray = response.body()?.variations

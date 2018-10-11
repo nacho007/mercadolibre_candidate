@@ -26,12 +26,14 @@ open class ActivityBase : AppCompatActivity(), OnDialogClickListener {
         super.onCreate(savedInstanceState)
 
         tag = this.javaClass.simpleName
-        dialogError?.onDialogClickListener = this
+
         val logging = HttpLoggingInterceptor()
         logging.level = HttpLoggingInterceptor.Level.BODY
 
         val httpClient = OkHttpClient.Builder()
         httpClient.addInterceptor(logging)
+
+        dialogError?.onDialogClickListener = this
 
         if (supportFragmentManager.findFragmentByTag(DIALOG_ERROR) != null) {
             (supportFragmentManager.findFragmentByTag(DIALOG_ERROR) as DialogFragmentError).onDialogClickListener = this
@@ -64,15 +66,7 @@ open class ActivityBase : AppCompatActivity(), OnDialogClickListener {
     }
 
     private fun showDialogError() {
-        // DialogFragment.show() will take care of adding the fragment
-        // in a transaction.  We also want to remove any currently showing
-        // dialog, so make our own transaction and take care of that here.
-        val ft = supportFragmentManager.beginTransaction()
-        val prev = supportFragmentManager.findFragmentByTag(DIALOG_ERROR)
-        if (prev != null) {
-            ft.remove(prev)
-        }
-        ft.commit()
+        cancelDialogError()
 
         // Create and show the dialog.
         dialogError = DialogFragmentError()
@@ -86,5 +80,18 @@ open class ActivityBase : AppCompatActivity(), OnDialogClickListener {
 
     override fun onRetry() {
 
+    }
+
+    fun cancelDialogError() {
+        // DialogFragment.show() will take care of adding the fragment
+        // in a transaction.  We also want to remove any currently showing
+        // dialog, so make our own transaction and take care of that here.
+
+        val ft = supportFragmentManager.beginTransaction()
+        val prev = supportFragmentManager.findFragmentByTag(DIALOG_ERROR)
+        if (prev != null) {
+            ft.remove(prev)
+        }
+        ft.commit()
     }
 }

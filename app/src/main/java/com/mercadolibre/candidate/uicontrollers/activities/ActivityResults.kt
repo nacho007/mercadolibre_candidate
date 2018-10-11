@@ -117,6 +117,7 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
             override fun onResponse(call: Call<SearchResultItem>?, response: Response<SearchResultItem>?) {
                 when {
                     response?.code() == 200 -> {
+                        cancelDialogError()
                         processServiceResponse(response.body())
                     }
                     else -> {
