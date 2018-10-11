@@ -14,6 +14,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
 class ActivityDetail : ActivityBase() {
 
     private var serviceDescription: Call<ProductItemDescription>? = null
@@ -93,6 +94,7 @@ class ActivityDetail : ActivityBase() {
         outState?.putString(ITEM_DESCRIPTION, itemDescription)
     }
 
+
     private fun callServiceDescription() {
         serviceDescription = retrofit.create<Service>(Service::class.java).itemDescription(itemId)
         activity_detail_progress_bar.visibility = View.VISIBLE
@@ -120,11 +122,13 @@ class ActivityDetail : ActivityBase() {
 
 
     private fun callServicePictures() {
+        supportPostponeEnterTransition()
         servicePictures = retrofit.create<Service>(Service::class.java).itemPictures(pictureId)
         activity_detail_progress_bar.visibility = View.VISIBLE
 
         servicePictures?.enqueue(object : Callback<ProductItemPictures> {
             override fun onFailure(call: Call<ProductItemPictures>?, t: Throwable?) {
+                supportStartPostponedEnterTransition()
                 callOnFailure(call)
             }
 
@@ -132,7 +136,28 @@ class ActivityDetail : ActivityBase() {
                 when {
                     response?.code() == 200 -> {
                         calledServicePictures = true
-//                        processServiceResponse(response.body())
+
+                        val maxSize = response.body()?.maxSize
+                        val productImageArray = response.body()?.variations
+                        var url = ""
+
+                        productImageArray?.forEach {
+                            if (it.size == maxSize) {
+                                url = it.secure_url
+                            }
+                        }
+
+
+                        Picasso.get().load(url).into(activity_detail_image_view_product, object : com.squareup.picasso.Callback {
+                            override fun onSuccess() {
+                                supportStartPostponedEnterTransition()
+                            }
+
+                            override fun onError(e: Exception?) {
+
+                            }
+                        })
+
                     }
                     else -> {
                         processRequest(response as Response<*>)
@@ -147,6 +172,8 @@ class ActivityDetail : ActivityBase() {
             calledOnFailure = true
             activity_detail_progress_bar.visibility = View.GONE
             onFailure(call as Call<*>)
+        }else{
+            calledOnFailure = false
         }
     }
 
