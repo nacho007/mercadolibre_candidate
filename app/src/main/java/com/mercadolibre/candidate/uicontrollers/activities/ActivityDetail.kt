@@ -25,7 +25,7 @@ class ActivityDetail : ActivityBase() {
     private var servicePictures: Call<ProductItemPictures>? = null
     private var calledServicePictures: Boolean = false
     private var pictureId: String = ""
-    private var thumbnail: String = ""
+    private var url: String = ""
 
     private var calledOnFailure = false
 
@@ -43,6 +43,11 @@ class ActivityDetail : ActivityBase() {
             calledServiceDescription = savedInstanceState.getBoolean(CALLED_SERVICE_DESCRIPTION)
             calledServicePictures = savedInstanceState.getBoolean(CALLED_SERVICE_PICTURES)
             itemDescription = savedInstanceState.getString(ITEM_DESCRIPTION)
+            url = savedInstanceState.getString(ITEM_PICTURE_URL, "")
+
+            if (url != "") {
+                Picasso.get().load(url).into(activity_detail_image_view_product)
+            }
 
             if (!itemDescription.isNullOrEmpty()) {
                 activity_detail_progress_bar.visibility = View.GONE
@@ -52,9 +57,6 @@ class ActivityDetail : ActivityBase() {
 
         itemId = intent.getStringExtra(ITEM_ID)
         pictureId = intent.getStringExtra(PICTURE_ID)
-        thumbnail = intent.getStringExtra(THUMBNAIL)
-
-        Picasso.get().load(thumbnail).into(activity_detail_image_view_product)
 
         layout_retry_button.setOnClickListener {
             layout_retry_constraint_layout.visibility = View.GONE
@@ -92,6 +94,7 @@ class ActivityDetail : ActivityBase() {
         outState?.putBoolean(CALLED_SERVICE_DESCRIPTION, calledServiceDescription)
         outState?.putBoolean(CALLED_SERVICE_PICTURES, calledServicePictures)
         outState?.putString(ITEM_DESCRIPTION, itemDescription)
+        outState?.putString(ITEM_PICTURE_URL, url)
     }
 
 
@@ -139,14 +142,12 @@ class ActivityDetail : ActivityBase() {
 
                         val maxSize = response.body()?.maxSize
                         val productImageArray = response.body()?.variations
-                        var url = ""
 
                         productImageArray?.forEach {
                             if (it.size == maxSize) {
                                 url = it.secure_url
                             }
                         }
-
 
                         Picasso.get().load(url).into(activity_detail_image_view_product, object : com.squareup.picasso.Callback {
                             override fun onSuccess() {
@@ -157,7 +158,6 @@ class ActivityDetail : ActivityBase() {
 
                             }
                         })
-
                     }
                     else -> {
                         processRequest(response as Response<*>)
@@ -172,7 +172,7 @@ class ActivityDetail : ActivityBase() {
             calledOnFailure = true
             activity_detail_progress_bar.visibility = View.GONE
             onFailure(call as Call<*>)
-        }else{
+        } else {
             calledOnFailure = false
         }
     }
