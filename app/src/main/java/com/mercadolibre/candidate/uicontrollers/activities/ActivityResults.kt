@@ -44,12 +44,18 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
         setContentView(R.layout.activity_results)
 
         setRecyclerView()
+        activity_results_textview_empty_list.visibility = View.GONE
 
         if (savedInstanceState != null) {
             calledService = savedInstanceState.getBoolean(CALLED_SERVICE_SEARCH)
             productsArrayList = savedInstanceState.getParcelableArrayList(PRODUCT_ITEM_ARRAY)
             availableFilters = savedInstanceState.getParcelableArrayList(FILTER_ARRAY)
-            setProductItemAdapter()
+
+            if (productsArrayList.orEmpty().isEmpty()) {
+                showEmptyResultsLabel()
+            } else {
+                setProductItemAdapter()
+            }
         }
 
         searchResult = intent.getStringExtra(SEARCH_STRING)
@@ -60,7 +66,6 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        activity_results_textview_empty_list.visibility = View.GONE
         adapter_product_item_progress_bar.visibility = View.GONE
 
         layout_retry_button.setOnClickListener {
@@ -234,5 +239,10 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
         }
 
         startActivity(intent, options?.toBundle())
+    }
+
+    private fun showEmptyResultsLabel() {
+        activity_results_textview_empty_list.visibility = View.VISIBLE
+        activity_results_recycler_view.visibility = View.GONE
     }
 }
