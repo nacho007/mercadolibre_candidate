@@ -53,4 +53,11 @@ class ProductItem(
             return arrayOfNulls(size)
         }
     }
+
+    fun getPictureId(): String{
+
+        thumbnail.split("/")
+
+        return ""
+    }
 }

@@ -25,7 +25,9 @@
         <activity
             android:name="com.mercadolibre.candidate.uicontrollers.activities.ActivityResults"
             android:theme="@style/AppThemeNoActionBar" />
-        <activity android:name="com.mercadolibre.candidate.uicontrollers.activities.ActivityDetail" />
+        <activity
+            android:name="com.mercadolibre.candidate.uicontrollers.activities.ActivityDetail"
+            android:theme="@style/AppThemeNoActionBar" />
 
     </application>
 

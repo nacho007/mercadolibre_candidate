@@ -1,5 +1,6 @@
 package com.mercadolibre.candidate.uicontrollers.activities
 
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
@@ -7,7 +8,6 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import com.mercadolibre.candidate.R
 import com.mercadolibre.candidate.adapters.AdapterProduct
 import com.mercadolibre.candidate.adapters.dividers.SimpleDividerItemDecoration
@@ -51,9 +51,9 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
 
         searchResult = intent.getStringExtra(SEARCH_STRING)
 
-        toolbar?.title = getString(R.string.activity_results_title)
+        toolbarResults?.title = getString(R.string.activity_results_title)
 
-        setSupportActionBar(toolbar)
+        setSupportActionBar(toolbarResults)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
@@ -109,7 +109,6 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
         service?.enqueue(object : Callback<SearchResultItem> {
             override fun onFailure(call: Call<SearchResultItem>?, t: Throwable?) {
                 onFailure(call as Call<*>)
-
             }
 
             override fun onResponse(call: Call<SearchResultItem>?, response: Response<SearchResultItem>?) {
@@ -123,32 +122,6 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
                 }
             }
         })
-    }
-
-    private fun setRecyclerView() {
-        val orientation = resources.configuration.orientation
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            setRecyclerViewLandscapeLayout()
-        } else {
-            setRecyclerViewPortraitLayout()
-        }
-    }
-
-    private fun setRecyclerViewPortraitLayout() {
-        activity_results_recycler_view.setHasFixedSize(true)
-        activity_results_recycler_view.layoutManager = LinearLayoutManager(this)
-
-        val dividerDrawable = ContextCompat.getDrawable(this, R.drawable.shape_divider_list_item)
-        activity_results_recycler_view.addItemDecoration(SimpleDividerItemDecoration(dividerDrawable))
-    }
-
-    private fun setRecyclerViewLandscapeLayout() {
-        activity_results_recycler_view.setHasFixedSize(true)
-        val spacing = resources.getDimension(R.dimen.margin).toInt()
-        activity_results_recycler_view.addItemDecoration(ColumnItemDecoration(spacing))
-
-        val layoutManager = GridLayoutManager(this, 2)
-        activity_results_recycler_view.layoutManager = layoutManager
     }
 
     override fun onFailure(call: Call<*>?) {
@@ -177,6 +150,31 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
         }
     }
 
+    private fun setRecyclerView() {
+        val orientation = resources.configuration.orientation
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setRecyclerViewLandscapeLayout()
+        } else {
+            setRecyclerViewPortraitLayout()
+        }
+    }
+
+    private fun setRecyclerViewPortraitLayout() {
+        activity_results_recycler_view.setHasFixedSize(true)
+        activity_results_recycler_view.layoutManager = LinearLayoutManager(this)
+
+        val dividerDrawable = ContextCompat.getDrawable(this, R.drawable.shape_divider_list_item)
+        activity_results_recycler_view.addItemDecoration(SimpleDividerItemDecoration(dividerDrawable))
+    }
+
+    private fun setRecyclerViewLandscapeLayout() {
+        activity_results_recycler_view.setHasFixedSize(true)
+        val spacing = resources.getDimension(R.dimen.margin).toInt()
+        activity_results_recycler_view.addItemDecoration(ColumnItemDecoration(spacing))
+
+        val layoutManager = GridLayoutManager(this, 2)
+        activity_results_recycler_view.layoutManager = layoutManager
+    }
 
     private fun setProductItemAdapter() {
         try {
@@ -221,6 +219,9 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
     }
 
     override fun onProductItemClick(productItem: ProductItem?) {
-        Toast.makeText(this, productItem?.title, Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, ActivityDetail::class.java)
+        intent.putExtra(ITEM_ID, productItem?.id)
+        intent.putExtra(PICTURE_ID, "")
+        startActivity(intent)
     }
 }

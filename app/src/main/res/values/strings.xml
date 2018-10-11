@@ -6,6 +6,7 @@
 
     <string name="product_item_price">%1$s %2$s</string>
     <string name="activity_results_title">Resultados</string>
+    <string name="activity_detail_title">Detalle</string>
 
     <string name="product_">Resultados</string>
 
