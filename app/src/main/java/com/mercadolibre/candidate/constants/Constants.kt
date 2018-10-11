@@ -9,7 +9,10 @@ const val PICTURE_ID = "picture_id"
 const val CONDITION = "condition"
 const val PRODUCT_ITEM_ARRAY = "product_item_array"
 const val FILTER_ARRAY = "filter_array"
-const val CALLED_SERVICE = "called_service"
+const val CALLED_SERVICE_SEARCH = "called_service_search"
+const val CALLED_SERVICE_DESCRIPTION = "called_service_description"
+const val CALLED_SERVICE_PICTURES = "called_service_pictures"
+const val ITEM_DESCRIPTION = "item_description"
 
 const val DIALOG_ERROR = "dialog_error"
 

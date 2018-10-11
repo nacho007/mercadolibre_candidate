@@ -46,7 +46,7 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
         setRecyclerView()
 
         if (savedInstanceState != null) {
-            calledService = savedInstanceState.getBoolean(CALLED_SERVICE)
+            calledService = savedInstanceState.getBoolean(CALLED_SERVICE_SEARCH)
             productsArrayList = savedInstanceState.getParcelableArrayList(PRODUCT_ITEM_ARRAY)
             availableFilters = savedInstanceState.getParcelableArrayList(FILTER_ARRAY)
             setProductItemAdapter()
@@ -102,7 +102,7 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
         super.onSaveInstanceState(outState)
         outState?.putParcelableArrayList(PRODUCT_ITEM_ARRAY, productsArrayList)
         outState?.putParcelableArrayList(FILTER_ARRAY, availableFilters)
-        outState?.putBoolean(CALLED_SERVICE, calledService)
+        outState?.putBoolean(CALLED_SERVICE_SEARCH, calledService)
     }
 
     private fun callService(progressBarVisibility: Int) {
