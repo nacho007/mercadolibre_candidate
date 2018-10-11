@@ -80,7 +80,7 @@ class ActivityDetail : ActivityBase() {
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
-        supportFinishAfterTransition()
+//        supportFinishAfterTransition()
         return true
     }
 
@@ -97,6 +97,7 @@ class ActivityDetail : ActivityBase() {
 
         serviceDescription?.enqueue(object : Callback<ProductItemDescription> {
             override fun onFailure(call: Call<ProductItemDescription>?, t: Throwable?) {
+                activity_detail_progress_bar.visibility = View.GONE
                 onFailure(call as Call<*>)
             }
 
@@ -123,7 +124,7 @@ class ActivityDetail : ActivityBase() {
 
         servicePictures?.enqueue(object : Callback<ProductItemPictures> {
             override fun onFailure(call: Call<ProductItemPictures>?, t: Throwable?) {
-                onFailure(call as Call<*>)
+
             }
 
             override fun onResponse(call: Call<ProductItemPictures>?, response: Response<ProductItemPictures>?) {

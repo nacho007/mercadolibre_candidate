@@ -72,7 +72,6 @@ open class ActivityBase : AppCompatActivity(), OnDialogClickListener {
         if (prev != null) {
             ft.remove(prev)
         }
-        ft.addToBackStack(null)
         ft.commit()
 
         // Create and show the dialog.
