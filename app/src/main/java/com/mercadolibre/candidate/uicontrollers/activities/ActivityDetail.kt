@@ -51,7 +51,7 @@ class ActivityDetail : ActivityBase() {
         }
 
         if (!calledServicePictures) {
-//            callServicePictures()
+            callServicePictures()
         }
     }
 

@@ -54,10 +54,10 @@ class ProductItem(
         }
     }
 
-    fun getPictureId(): String{
-
-        thumbnail.split("/")
-
-        return ""
+    fun getPictureId(): String {
+        val split1 = thumbnail.split("/")
+        val string1 = split1[split1.size - 1]
+        val split2 = string1.split("-")
+        return split2[0] + "-" + split2[1]
     }
 }

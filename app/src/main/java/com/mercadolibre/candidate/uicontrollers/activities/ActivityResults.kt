@@ -225,7 +225,7 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
         val intent = Intent(this, ActivityDetail::class.java)
         intent.putExtra(ITEM_ID, productItem?.id)
         intent.putExtra(THUMBNAIL, productItem?.thumbnail)
-        intent.putExtra(PICTURE_ID, "")
+        intent.putExtra(PICTURE_ID, productItem?.getPictureId())
 
         var options: ActivityOptionsCompat? = null
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
