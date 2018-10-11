@@ -79,8 +79,8 @@ class ActivityDetail : ActivityBase() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        supportFinishAfterTransition()
         onBackPressed()
+        supportFinishAfterTransition()
         return true
     }
 
