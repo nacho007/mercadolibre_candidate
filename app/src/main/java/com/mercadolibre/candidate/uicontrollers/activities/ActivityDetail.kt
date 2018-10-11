@@ -26,6 +26,8 @@ class ActivityDetail : ActivityBase() {
     private var pictureId: String = ""
     private var thumbnail: String = ""
 
+    private var calledOnFailure = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
@@ -80,7 +82,7 @@ class ActivityDetail : ActivityBase() {
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
-//        supportFinishAfterTransition()
+        supportFinishAfterTransition()
         return true
     }
 
@@ -97,8 +99,7 @@ class ActivityDetail : ActivityBase() {
 
         serviceDescription?.enqueue(object : Callback<ProductItemDescription> {
             override fun onFailure(call: Call<ProductItemDescription>?, t: Throwable?) {
-                activity_detail_progress_bar.visibility = View.GONE
-                onFailure(call as Call<*>)
+                callOnFailure(call)
             }
 
             override fun onResponse(call: Call<ProductItemDescription>?, response: Response<ProductItemDescription>?) {
@@ -124,7 +125,7 @@ class ActivityDetail : ActivityBase() {
 
         servicePictures?.enqueue(object : Callback<ProductItemPictures> {
             override fun onFailure(call: Call<ProductItemPictures>?, t: Throwable?) {
-
+                callOnFailure(call)
             }
 
             override fun onResponse(call: Call<ProductItemPictures>?, response: Response<ProductItemPictures>?) {
@@ -139,6 +140,14 @@ class ActivityDetail : ActivityBase() {
                 }
             }
         })
+    }
+
+    fun callOnFailure(call: Call<*>?) {
+        if (!calledOnFailure) {
+            calledOnFailure = true
+            activity_detail_progress_bar.visibility = View.GONE
+            onFailure(call as Call<*>)
+        }
     }
 
     override fun onCancel() {

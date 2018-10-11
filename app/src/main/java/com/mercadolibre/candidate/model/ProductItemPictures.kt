@@ -9,5 +9,6 @@ import java.io.Serializable
 
 class ProductItemPictures(
         @SerializedName("id") var id: String,
+        @SerializedName("max_size") var maxSize: String,
         @SerializedName("variations") var variations: ArrayList<ProductItemPicture>
 ) : Serializable
