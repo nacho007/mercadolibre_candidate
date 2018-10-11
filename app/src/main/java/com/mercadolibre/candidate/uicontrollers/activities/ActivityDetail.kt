@@ -5,9 +5,11 @@ import android.view.View
 import com.mercadolibre.candidate.R
 import com.mercadolibre.candidate.constants.ITEM_ID
 import com.mercadolibre.candidate.constants.PICTURE_ID
+import com.mercadolibre.candidate.constants.THUMBNAIL
 import com.mercadolibre.candidate.model.ProductItemDescription
 import com.mercadolibre.candidate.model.ProductItemPictures
 import com.mercadolibre.candidate.services.Service
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -22,7 +24,7 @@ class ActivityDetail : ActivityBase() {
     private var servicePictures: Call<ProductItemPictures>? = null
     private var calledServicePictures: Boolean = false
     private var pictureId: String = ""
-
+    private var thumbnail: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,9 +36,11 @@ class ActivityDetail : ActivityBase() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-
         itemId = intent.getStringExtra(ITEM_ID)
         pictureId = intent.getStringExtra(PICTURE_ID)
+        thumbnail = intent.getStringExtra(THUMBNAIL)
+
+        Picasso.get().load(thumbnail).into(activity_detail_image_view_product)
     }
 
     override fun onStart() {
@@ -58,6 +62,7 @@ class ActivityDetail : ActivityBase() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
+        supportFinishAfterTransition()
         onBackPressed()
         return true
     }

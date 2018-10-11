@@ -1,6 +1,5 @@
 package com.mercadolibre.candidate.adapters
 
-import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -34,11 +33,9 @@ class AdapterProduct(private var productItem: ArrayList<ProductItem>?, private v
 
     class ProductViewHolder(private val v: View) : RecyclerView.ViewHolder(v) {
 
-        private val context: Context = v.context
-
         fun setItem(productItem: ProductItem?) {
             v.adapter_product_item_text_view_title.text = productItem?.title
-            v.adapter_product_item_text_view_price.text = context.getString(R.string.product_item_price, productItem?.currencyId,
+            v.adapter_product_item_text_view_price.text = v.context.getString(R.string.product_item_price, productItem?.currencyId,
                     DoubleFormat.instance.getDecimalFormatOnlyShowDecimalIfNotZero().format(productItem?.price))
 
             v.adapter_product_item_text_view_condition.text = ConditionMapper.instance.matchValue(productItem?.condition)
@@ -49,7 +46,7 @@ class AdapterProduct(private var productItem: ArrayList<ProductItem>?, private v
 
         fun bind(productItem: ProductItem?, listener: OnProductItemClickListener) {
             itemView.setOnClickListener {
-                listener.onProductItemClick(productItem)
+                listener.onProductItemClick(productItem, itemView.adapter_product_item_image_view)
             }
         }
 

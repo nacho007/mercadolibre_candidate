@@ -2,7 +2,9 @@ package com.mercadolibre.candidate.uicontrollers.activities
 
 import android.content.Intent
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
@@ -25,6 +27,7 @@ import kotlinx.android.synthetic.main.layout_retry.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class ActivityResults : ActivityBase(), OnProductItemClickListener {
 
@@ -218,10 +221,17 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
         callService(View.VISIBLE)
     }
 
-    override fun onProductItemClick(productItem: ProductItem?) {
+    override fun onProductItemClick(productItem: ProductItem?, view: View) {
         val intent = Intent(this, ActivityDetail::class.java)
         intent.putExtra(ITEM_ID, productItem?.id)
+        intent.putExtra(THUMBNAIL, productItem?.thumbnail)
         intent.putExtra(PICTURE_ID, "")
-        startActivity(intent)
+
+        var options: ActivityOptionsCompat? = null
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,  view, "product_image")
+        }
+
+        startActivity(intent, options?.toBundle())
     }
 }
