@@ -12,7 +12,8 @@ const val CALLED_SERVICE_SEARCH = "called_service_search"
 const val CALLED_SERVICE_DESCRIPTION = "called_service_description"
 const val CALLED_SERVICE_PICTURES = "called_service_pictures"
 const val ITEM_DESCRIPTION = "item_description"
-const val ITEM_PICTURE_URL = "picture_url"
+const val ITEM_PICTURE_URL = "item_picture_url"
+const val ITEM_THUMBNAIL = "item_thumbnail"
 
 const val DIALOG_ERROR = "dialog_error"
 

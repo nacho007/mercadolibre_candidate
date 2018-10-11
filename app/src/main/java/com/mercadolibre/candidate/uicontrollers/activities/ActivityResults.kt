@@ -224,6 +224,7 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
     override fun onProductItemClick(productItem: ProductItem?, view: View) {
         val intent = Intent(this, ActivityDetail::class.java)
         intent.putExtra(ITEM_ID, productItem?.id)
+        intent.putExtra(ITEM_THUMBNAIL, productItem?.thumbnail)
         intent.putExtra(PICTURE_ID, productItem?.getPictureId())
 
         var options: ActivityOptionsCompat? = null

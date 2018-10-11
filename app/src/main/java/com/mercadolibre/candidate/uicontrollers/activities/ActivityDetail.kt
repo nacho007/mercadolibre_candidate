@@ -26,6 +26,7 @@ class ActivityDetail : ActivityBase() {
     private var calledServicePictures: Boolean = false
     private var pictureId: String = ""
     private var url: String = ""
+    private var thumnbail = ""
 
     private var calledOnFailure = false
 
@@ -39,6 +40,12 @@ class ActivityDetail : ActivityBase() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
+        itemId = intent.getStringExtra(ITEM_ID)
+        pictureId = intent.getStringExtra(PICTURE_ID)
+        thumnbail = intent.getStringExtra(ITEM_THUMBNAIL)
+
+        Picasso.get().load(thumnbail).noPlaceholder().into(activity_detail_image_view_product)
+
         if (savedInstanceState != null) {
             calledServiceDescription = savedInstanceState.getBoolean(CALLED_SERVICE_DESCRIPTION)
             calledServicePictures = savedInstanceState.getBoolean(CALLED_SERVICE_PICTURES)
@@ -46,7 +53,7 @@ class ActivityDetail : ActivityBase() {
             url = savedInstanceState.getString(ITEM_PICTURE_URL, "")
 
             if (url != "") {
-                Picasso.get().load(url).into(activity_detail_image_view_product)
+                Picasso.get().load(url).noPlaceholder().into(activity_detail_image_view_product)
             }
 
             if (!itemDescription.isNullOrEmpty()) {
@@ -54,9 +61,6 @@ class ActivityDetail : ActivityBase() {
                 activity_detail_text_view_description.text = itemDescription
             }
         }
-
-        itemId = intent.getStringExtra(ITEM_ID)
-        pictureId = intent.getStringExtra(PICTURE_ID)
 
         layout_retry_button.setOnClickListener {
             layout_retry_constraint_layout.visibility = View.GONE
@@ -125,7 +129,6 @@ class ActivityDetail : ActivityBase() {
 
 
     private fun callServicePictures() {
-        supportPostponeEnterTransition()
         servicePictures = retrofit.create<Service>(Service::class.java).itemPictures(pictureId)
         activity_detail_progress_bar.visibility = View.VISIBLE
 
@@ -149,15 +152,7 @@ class ActivityDetail : ActivityBase() {
                             }
                         }
 
-                        Picasso.get().load(url).into(activity_detail_image_view_product, object : com.squareup.picasso.Callback {
-                            override fun onSuccess() {
-                                supportStartPostponedEnterTransition()
-                            }
-
-                            override fun onError(e: Exception?) {
-
-                            }
-                        })
+                        Picasso.get().load(url).noPlaceholder().into(activity_detail_image_view_product)
                     }
                     else -> {
                         processRequest(response as Response<*>)
