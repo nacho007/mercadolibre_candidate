@@ -1,6 +1,6 @@
 package com.mercadolibre.candidate.interfaces
 
 interface OnDialogClickListener {
-    fun onCancel()
+    fun onCancel(description: String)
     fun onRetry()
 }
