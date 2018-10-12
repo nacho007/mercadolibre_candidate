@@ -118,6 +118,7 @@ class ActivityDetail : ActivityBase() {
     private fun callServiceDescription() {
         serviceDescription = retrofit.create<Service>(Service::class.java).itemDescription(itemId)
         activity_detail_progress_bar.visibility = View.VISIBLE
+        activity_detail_text_view_description.visibility = View.GONE
 
         serviceDescription?.enqueue(object : Callback<ProductItemDescription> {
             override fun onFailure(call: Call<ProductItemDescription>?, t: Throwable?) {
