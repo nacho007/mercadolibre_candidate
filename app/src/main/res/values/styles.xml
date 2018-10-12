@@ -1,11 +1,126 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="autoCompleteTextViewStyle">@style/AutoCompleteEditTextStyle</item>
+        <item name="buttonStyle">@style/ButtonStyle</item>
+        <item name="android:textViewStyle">@style/TextViewStyle</item>
+        <item name="toolbarStyle">@style/ToolbarStyle</item>
     </style>
+
+    <!-- Custom Toolbar application theme. -->
+    <style name="AppThemeNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="autoCompleteTextViewStyle">@style/AutoCompleteEditTextStyle</item>
+        <item name="buttonStyle">@style/ButtonStyle</item>
+        <item name="android:textViewStyle">@style/TextViewStyle</item>
+        <item name="toolbarStyle">@style/ToolbarStyle</item>
+        <item name="android:windowContentTransitions" tools:targetApi="lollipop">true</item>
+        <item name="android:windowSharedElementEnterTransition" tools:targetApi="lollipop">
+            @transition/transition_animation
+        </item>
+        <item name="android:windowSharedElementExitTransition" tools:targetApi="lollipop">
+            @transition/transition_animation
+        </item>
+    </style>
+
+
+    <!--Toolbar-->
+
+    <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
+        <item name="titleTextColor">@color/colorAccent</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textSize">@dimen/text_size_3</item>
+        <item name="android:gravity">start</item>
+        <item name="android:fontFamily">@font/robotomedium</item>
+    </style>
+
+    <!--TextView-->
+
+    <style name="TextViewStyle" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textSize">@dimen/text_size_3</item>
+        <item name="android:gravity">center</item>
+        <item name="android:fontFamily">@font/robotolight</item>
+    </style>
+
+    <style name="TextViewStyleBold" parent="TextViewStyle">
+        <item name="android:fontFamily">@font/robotobold</item>
+    </style>
+
+    <style name="TextViewStyleCondition" parent="TextViewStyle">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/robotoregular</item>
+    </style>
+
+    <!--EditText-->
+
+    <style name="AutoCompleteEditTextStyle" parent="Widget.AppCompat.AutoCompleteTextView">
+        <item name="android:gravity">start</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textSize">@dimen/edittext_size</item>
+        <item name="android:textColorHint">@color/colorAccent</item>
+        <item name="android:paddingTop">@dimen/padding</item>
+        <item name="android:paddingBottom">@dimen/padding</item>
+        <item name="android:paddingRight">@dimen/padding</item>
+        <item name="backgroundTint">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/robotolight</item>
+    </style>
+
+
+    <!--Button-->
+
+    <style name="ButtonStyle" parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:background">@drawable/selector_button</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/robotoregular</item>
+    </style>
+
+    <style name="ButtonRetryStyle" parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:background">@null</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/robotomedium</item>
+    </style>
+
+    <style name="ButtonCancelStyle" parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:background">@null</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/robotolight</item>
+    </style>
+
+    <!--RecyclerView-->
+
+    <style name="RecyclerViewStyle" parent="@android:style/Widget.ListView">
+        <item name="android:fadingEdge">none</item>
+        <item name="android:overScrollMode">never</item>
+        <item name="android:scrollbars">none</item>
+        <item name="android:fadeScrollbars">false</item>
+        <item name="android:scrollbarThumbHorizontal">@null</item>
+        <item name="android:scrollbarThumbVertical">@null</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <!--Dialogs-->
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textViewStyle">@style/TextViewStyle</item>
+        <item name="windowMinWidthMajor">90%</item>
+        <item name="windowMinWidthMinor">90%</item>
+    </style>
+
 
 </resources>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/adapter_product_item_constraintlayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/padding">
+
+    <ImageView
+        android:id="@+id/adapter_product_item_image_view"
+        android:layout_width="@dimen/image_size"
+        android:layout_height="@dimen/image_size"
+        android:layout_marginEnd="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:transitionName="@string/product_image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_launcher"
+        tools:targetApi="lollipop" />
+
+    <TextView
+        android:id="@+id/adapter_product_item_text_view_title"
+        style="@style/TextViewStyleBold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/adapter_product_item_image_view"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Title " />
+
+
+    <TextView
+        android:id="@+id/adapter_product_item_text_view_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/adapter_product_item_image_view"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_product_item_text_view_title"
+        tools:text="50" />
+
+    <TextView
+        android:id="@+id/adapter_product_item_text_view_condition"
+        style="@style/TextViewStyleCondition"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/adapter_product_item_image_view"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_product_item_text_view_price"
+        tools:text="New" />
+
+    <TextView
+        android:id="@+id/adapter_product_item_text_view_accepts_mp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/adapter_product_item_image_view"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_product_item_text_view_condition"
+        tools:text="Accepts" />
+
+</android.support.constraint.ConstraintLayout>

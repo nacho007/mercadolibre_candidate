@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="padding">10dp</dimen>
+    <dimen name="margin">10dp</dimen>
+
+    <dimen name="text_size_0">8sp</dimen>
+    <dimen name="text_size_1">10sp</dimen>
+    <dimen name="text_size_2">12sp</dimen>
+    <dimen name="text_size_3">14sp</dimen>
+    <dimen name="text_size_4">16sp</dimen>
+    <dimen name="text_size_5">24sp</dimen>
+    <dimen name="text_size_6">28sp</dimen>
+
+    <dimen name="edittext_size">@dimen/text_size_3</dimen>
+    <dimen name="button_text_size">@dimen/text_size_3</dimen>
+
+    <dimen name="image_size">70dp</dimen>
+
+</resources>
