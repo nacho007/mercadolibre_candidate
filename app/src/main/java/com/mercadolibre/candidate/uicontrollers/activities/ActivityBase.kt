@@ -3,9 +3,9 @@ package com.mercadolibre.candidate.uicontrollers.activities
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.widget.Toast
 import com.mercadolibre.candidate.R
 import com.mercadolibre.candidate.constants.BASE_URL
+import com.mercadolibre.candidate.constants.DIALOG_DESCRIPTION
 import com.mercadolibre.candidate.constants.DIALOG_ERROR
 import com.mercadolibre.candidate.interfaces.OnDialogClickListener
 import com.mercadolibre.candidate.uicontrollers.dialogs.DialogFragmentError
@@ -50,26 +50,30 @@ open class ActivityBase : AppCompatActivity(), OnDialogClickListener {
         if (call?.isCanceled == true) {
             Log.e(tag, getString(R.string.mobile_service_cancelled))
         } else {
-            showDialogError()
+            showDialogError(getString(R.string.mobile_internet_error))
         }
     }
 
     fun processRequest(responseBody: Response<*>?) {
         when {
             responseBody?.code() == 404 -> {
-                Toast.makeText(applicationContext, getString(R.string.mobile_404), Toast.LENGTH_SHORT).show()
+                showDialogError(getString(R.string.mobile_404))
             }
             else -> {
-                Toast.makeText(applicationContext, getString(R.string.mobile_generic_error), Toast.LENGTH_SHORT).show()
+                showDialogError(getString(R.string.mobile_generic_error))
             }
         }
     }
 
-    private fun showDialogError() {
+    private fun showDialogError(description: String) {
         cancelDialogError()
 
         // Create and show the dialog.
         dialogError = DialogFragmentError()
+        val bundle: Bundle = Bundle()
+        bundle.putString(DIALOG_DESCRIPTION, description)
+        dialogError?.arguments = bundle
+
         dialogError?.onDialogClickListener = this
         dialogError?.show(supportFragmentManager, DIALOG_ERROR)
     }

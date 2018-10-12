@@ -16,6 +16,7 @@ const val ITEM_PICTURE_URL = "item_picture_url"
 const val ITEM_THUMBNAIL = "item_thumbnail"
 
 const val DIALOG_ERROR = "dialog_error"
+const val DIALOG_DESCRIPTION = "dialog_description"
 
 const val TOP = "top"
 const val BOTTOM = "bottom"
