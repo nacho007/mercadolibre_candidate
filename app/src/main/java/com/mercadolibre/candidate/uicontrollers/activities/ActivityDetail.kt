@@ -154,7 +154,6 @@ class ActivityDetail : ActivityBase() {
 
     private fun callServicePictures() {
         servicePictures = retrofit.create<Service>(Service::class.java).itemPictures(pictureId)
-        activity_detail_progress_bar.visibility = View.VISIBLE
 
         servicePictures?.enqueue(object : Callback<ProductItemPictures> {
             override fun onFailure(call: Call<ProductItemPictures>?, t: Throwable?) {
