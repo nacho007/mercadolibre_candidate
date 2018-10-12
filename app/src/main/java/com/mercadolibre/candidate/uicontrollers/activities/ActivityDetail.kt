@@ -93,6 +93,11 @@ class ActivityDetail : ActivityBase() {
         return true
     }
 
+
+    /**
+     * Saves the state of the service result for later use
+     *
+     */
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         outState?.putBoolean(CALLED_SERVICE_DESCRIPTION, calledServiceDescription)
@@ -174,11 +179,20 @@ class ActivityDetail : ActivityBase() {
         }
     }
 
+
+    /**
+     * Handling the Dialog Error onCancel event
+     *
+     */
     override fun onCancel() {
         activity_detail_progress_bar.visibility = View.GONE
         layout_retry_constraint_layout.visibility = View.VISIBLE
     }
 
+    /**
+     * Handling the Dialog Error onRetry event
+     *
+     */
     override fun onRetry() {
         callServiceDescription()
         callServicePictures()
