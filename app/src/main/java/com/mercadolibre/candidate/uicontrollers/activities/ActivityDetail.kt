@@ -56,9 +56,11 @@ class ActivityDetail : ActivityBase() {
                 Picasso.get().load(url).noPlaceholder().into(activity_detail_image_view_product)
             }
 
+            activity_detail_progress_bar.visibility = View.GONE
             if (!itemDescription.isNullOrEmpty()) {
-                activity_detail_progress_bar.visibility = View.GONE
                 activity_detail_text_view_description.text = itemDescription
+            } else {
+                activity_detail_text_view_description.text = getString(R.string.mobile_no_data)
             }
         }
 
@@ -122,7 +124,13 @@ class ActivityDetail : ActivityBase() {
                         calledServiceDescription = true
                         cancelDialogError()
                         itemDescription = response.body()?.plainText
-                        activity_detail_text_view_description.text = itemDescription
+
+                        if (itemDescription.isNullOrEmpty()) {
+                            activity_detail_text_view_description.text = getString(R.string.mobile_no_data)
+                        } else {
+                            activity_detail_text_view_description.text = itemDescription
+                        }
+
                         activity_detail_progress_bar.visibility = View.GONE
                     }
                     else -> {
