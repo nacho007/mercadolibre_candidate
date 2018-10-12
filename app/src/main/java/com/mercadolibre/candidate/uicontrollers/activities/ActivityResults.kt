@@ -126,6 +126,7 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
     private fun callService(progressBarVisibility: Int) {
         service = retrofit.create<Service>(Service::class.java).listSearchResultItems(SITE_ID, searchResult)
         adapter_product_item_progress_bar.visibility = progressBarVisibility
+        activity_results_textview_empty_list.visibility = View.GONE
 
         service?.enqueue(object : Callback<SearchResultItem> {
             override fun onFailure(call: Call<SearchResultItem>?, t: Throwable?) {
