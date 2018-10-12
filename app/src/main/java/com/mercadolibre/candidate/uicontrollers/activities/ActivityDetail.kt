@@ -61,6 +61,7 @@ class ActivityDetail : ActivityBase() {
             }
 
             activity_detail_progress_bar.visibility = View.GONE
+            activity_detail_text_view_description.visibility = View.VISIBLE
 
             if (!itemDescription.isNullOrEmpty()) {
                 activity_detail_text_view_description.text = itemDescription
@@ -120,6 +121,7 @@ class ActivityDetail : ActivityBase() {
 
         serviceDescription?.enqueue(object : Callback<ProductItemDescription> {
             override fun onFailure(call: Call<ProductItemDescription>?, t: Throwable?) {
+                activity_detail_text_view_description.visibility = View.GONE
                 callOnFailure(call)
             }
 
@@ -136,6 +138,7 @@ class ActivityDetail : ActivityBase() {
                             activity_detail_text_view_description.text = itemDescription
                         }
 
+                        activity_detail_text_view_description.visibility = View.VISIBLE
                         activity_detail_progress_bar.visibility = View.GONE
                     }
                     else -> {
@@ -196,7 +199,7 @@ class ActivityDetail : ActivityBase() {
     fun incrementServiceSuccessCount() {
         serviceSuccessCount++
 
-        if (serviceSuccessCount > 2) {
+        if (serviceSuccessCount >= 2) {
             cancelDialogError()
             serviceSuccessCount = 0
         }
