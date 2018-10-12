@@ -19,7 +19,7 @@ Tecnología
 Usabilidad
 
 - Se utilizan animaciones
-- Se maneja el estado sin conexión
+- Se manejan diaálogos de errores de conexión (internet, errores en general)
 - Se utiliza Swipe to refresh en el listado de items
 - Layouts para Potrait & Landscape 
 - RetroFit con loggin level BODY
