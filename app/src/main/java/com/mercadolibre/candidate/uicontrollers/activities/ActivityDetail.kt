@@ -79,9 +79,11 @@ class ActivityDetail : ActivityBase() {
 
     override fun onStart() {
         super.onStart()
-
+        
         if (!calledServiceDescription) {
             callServiceDescription()
+        } else {
+            activity_detail_progress_bar.visibility = View.GONE
         }
 
         if (!calledServicePictures) {
