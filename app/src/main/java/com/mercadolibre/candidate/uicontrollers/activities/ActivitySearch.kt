@@ -67,7 +67,8 @@ class ActivitySearch : ActivityBase() {
     private fun updateSearchStrings(searchString: String) {
         searchStringSet?.add(searchString)
         Preferences.getInstance(this).saveSearchString(this, searchStringSet)
-        adapter?.add(searchString)
+        adapter?.clear()
+        adapter?.addAll(searchStringSet)
         adapter?.notifyDataSetChanged()
     }
 
