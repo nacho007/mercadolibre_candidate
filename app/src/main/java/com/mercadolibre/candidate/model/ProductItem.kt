@@ -18,14 +18,14 @@ class ProductItem(
 ) : Serializable, Parcelable, Base() {
 
     constructor(parcel: Parcel) : this(
-            parcel.readString(),
-            parcel.readString(),
+            parcel.readString()!!,
+            parcel.readString()!!,
             parcel.readDouble(),
-            parcel.readString(),
+            parcel.readString()!!,
             parcel.readInt(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
+            parcel.readString()!!,
+            parcel.readString()!!,
+            parcel.readString()!!,
             parcel.readByte() != 0.toByte())
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

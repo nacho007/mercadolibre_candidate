@@ -9,7 +9,7 @@ class Filter(
         @SerializedName("values") var values: ArrayList<Values>
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
-            parcel.readString(), arrayListOf<Values>().apply {
+            parcel.readString()!!, arrayListOf<Values>().apply {
         parcel.readList(this, Values::class.java.classLoader)
     })
 

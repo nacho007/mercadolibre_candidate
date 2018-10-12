@@ -14,7 +14,10 @@ import kotlinx.android.synthetic.main.activity_search.*
 
 class ActivitySearch : ActivityBase() {
 
-    //We use a MUTABLESET for search strings, so there are no repeated Strings, also supported in shared Preferences!
+    /**
+     * We use a MUTABLESET for search strings, so there are no repeated Strings, also supported in shared Preferences!
+     *
+     */
     private var searchStringSet: MutableSet<String>? = null
     private var adapter: ArrayAdapter<String>? = null
 
@@ -47,12 +50,20 @@ class ActivitySearch : ActivityBase() {
         createSearchStringsAdapter()
     }
 
+    /**
+     * Retrieves previously user search string and sets it to the AutoCompleteTextView.
+     *
+     */
     private fun createSearchStringsAdapter() {
         searchStringSet = Preferences.getInstance(this).getSearchString(this)
         adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, searchStringSet?.toMutableList()!!)
         activity_search_edittext.setAdapter(adapter)
     }
 
+    /**
+     * When a new search is made, it is saved in shared preferences
+     *
+     */
     private fun updateSearchStrings(searchString: String) {
         searchStringSet?.add(searchString)
         Preferences.getInstance(this).saveSearchString(this, searchStringSet)
@@ -60,6 +71,10 @@ class ActivitySearch : ActivityBase() {
         adapter?.notifyDataSetChanged()
     }
 
+    /**
+     * If the search string is empty then the button is disabled, else enabled
+     *
+     */
     fun validateSearchInputs() {
         activity_search_search_button.isEnabled = activity_search_edittext.text.isNotEmpty()
     }

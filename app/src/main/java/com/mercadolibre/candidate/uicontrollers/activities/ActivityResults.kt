@@ -84,6 +84,11 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
         }
     }
 
+
+    /**
+     * If not called, in onStart the service is called
+     *
+     */
     override fun onStart() {
         super.onStart()
 
@@ -92,6 +97,10 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
         }
     }
 
+    /**
+     * Stop the service in onStop to avoid processing when the app is backgrounded
+     *
+     */
     override fun onStop() {
         super.onStop()
         service?.cancel()
@@ -103,6 +112,10 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
     }
 
 
+    /**
+     * Saves the state of the service result for later use
+     *
+     */
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         outState?.putParcelableArrayList(PRODUCT_ITEM_ARRAY, productsArrayList)
@@ -159,6 +172,10 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
         }
     }
 
+    /**
+     * This method is in charge of handling the layout rotation
+     *
+     */
     private fun setRecyclerView() {
         val orientation = resources.configuration.orientation
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -168,6 +185,10 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
         }
     }
 
+    /**
+     * Sets the recyclerview for Portrait layout
+     *
+     */
     private fun setRecyclerViewPortraitLayout() {
         activity_results_recycler_view.setHasFixedSize(true)
         activity_results_recycler_view.layoutManager = LinearLayoutManager(this)
@@ -176,6 +197,10 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
         activity_results_recycler_view.addItemDecoration(SimpleDividerItemDecoration(dividerDrawable))
     }
 
+    /**
+     * Sets the recyclerview for Landscape layout, using Grid manager with 2 columns
+     *
+     */
     private fun setRecyclerViewLandscapeLayout() {
         activity_results_recycler_view.setHasFixedSize(true)
         val spacing = resources.getDimension(R.dimen.margin).toInt()
@@ -208,6 +233,10 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
         activity_results_recycler_view.adapter = adapterProduct
     }
 
+    /**
+     * Handling the Dialog Error onCancel event
+     *
+     */
     override fun onCancel() {
         adapter_product_item_progress_bar.visibility = View.GONE
         activity_results_swipe_layout.isRefreshing = false
@@ -222,11 +251,20 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
 
     }
 
+    /**
+     * Handling the Dialog Error onRetry event
+     *
+     */
     override fun onRetry() {
         activity_results_recycler_view.visibility = View.GONE
         callService(View.VISIBLE)
     }
 
+
+    /**
+     * When a product is clicked, we navigate to the Product's detail activity
+     *
+     */
     override fun onProductItemClick(productItem: ProductItem?, view: View) {
         val intent = Intent(this, ActivityDetail::class.java)
         intent.putExtra(ITEM_ID, productItem?.id)
