@@ -65,12 +65,17 @@ open class ActivityBase : AppCompatActivity(), OnDialogClickListener {
         }
     }
 
+
+    /**
+     *  DialogFragment.show() will take care of adding the fragment
+     *  in a transaction.
+     */
     private fun showDialogError(description: String) {
         cancelDialogError()
 
         // Create and show the dialog.
         dialogError = DialogFragmentError()
-        val bundle: Bundle = Bundle()
+        val bundle = Bundle()
         bundle.putString(DIALOG_DESCRIPTION, description)
         dialogError?.arguments = bundle
 
@@ -78,19 +83,12 @@ open class ActivityBase : AppCompatActivity(), OnDialogClickListener {
         dialogError?.show(supportFragmentManager, DIALOG_ERROR)
     }
 
-    override fun onCancel() {
 
-    }
-
-    override fun onRetry() {
-
-    }
-
+    /**
+     *  We also want to remove any currently showing
+     *  dialog, so make our own transaction and take care of that here.
+     */
     fun cancelDialogError() {
-        // DialogFragment.show() will take care of adding the fragment
-        // in a transaction.  We also want to remove any currently showing
-        // dialog, so make our own transaction and take care of that here.
-
         val ft = supportFragmentManager.beginTransaction()
         val prev = supportFragmentManager.findFragmentByTag(DIALOG_ERROR)
         if (prev != null) {
@@ -98,4 +96,13 @@ open class ActivityBase : AppCompatActivity(), OnDialogClickListener {
         }
         ft.commit()
     }
+
+    override fun onCancel(description: String) {
+
+    }
+
+    override fun onRetry() {
+
+    }
+
 }

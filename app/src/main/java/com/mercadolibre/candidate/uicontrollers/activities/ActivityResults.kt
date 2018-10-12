@@ -237,7 +237,7 @@ class ActivityResults : ActivityBase(), OnProductItemClickListener {
      * Handling the Dialog Error onCancel event
      *
      */
-    override fun onCancel() {
+    override fun onCancel(description: String) {
         adapter_product_item_progress_bar.visibility = View.GONE
         activity_results_swipe_layout.isRefreshing = false
         activity_results_swipe_layout.isEnabled = true

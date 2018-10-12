@@ -26,9 +26,10 @@ class ActivityDetail : ActivityBase() {
     private var calledServicePictures: Boolean = false
     private var pictureId: String = ""
     private var url: String = ""
-    private var thumnbail = ""
+    private var thumbNail = ""
 
     private var calledOnFailure = false
+    private var serviceSuccessCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,9 +43,12 @@ class ActivityDetail : ActivityBase() {
 
         itemId = intent.getStringExtra(ITEM_ID)
         pictureId = intent.getStringExtra(PICTURE_ID)
-        thumnbail = intent.getStringExtra(ITEM_THUMBNAIL)
+        thumbNail = intent.getStringExtra(ITEM_THUMBNAIL)
 
-        Picasso.get().load(thumnbail).noPlaceholder().into(activity_detail_image_view_product)
+        Picasso.get().load(thumbNail).noPlaceholder().into(activity_detail_image_view_product)
+
+        activity_detail_text_view_description.visibility = View.GONE
+        activity_detail_progress_bar.visibility = View.GONE
 
         if (savedInstanceState != null) {
             calledServiceDescription = savedInstanceState.getBoolean(CALLED_SERVICE_DESCRIPTION)
@@ -57,6 +61,7 @@ class ActivityDetail : ActivityBase() {
             }
 
             activity_detail_progress_bar.visibility = View.GONE
+
             if (!itemDescription.isNullOrEmpty()) {
                 activity_detail_text_view_description.text = itemDescription
             } else {
@@ -122,8 +127,8 @@ class ActivityDetail : ActivityBase() {
                 when {
                     response?.code() == 200 -> {
                         calledServiceDescription = true
-                        cancelDialogError()
                         itemDescription = response.body()?.plainText
+                        incrementServiceSuccessCount()
 
                         if (itemDescription.isNullOrEmpty()) {
                             activity_detail_text_view_description.text = getString(R.string.mobile_no_data)
@@ -134,6 +139,8 @@ class ActivityDetail : ActivityBase() {
                         activity_detail_progress_bar.visibility = View.GONE
                     }
                     else -> {
+                        activity_detail_text_view_description.visibility = View.GONE
+                        activity_detail_progress_bar.visibility = View.GONE
                         processRequest(response as Response<*>)
                     }
                 }
@@ -148,7 +155,6 @@ class ActivityDetail : ActivityBase() {
 
         servicePictures?.enqueue(object : Callback<ProductItemPictures> {
             override fun onFailure(call: Call<ProductItemPictures>?, t: Throwable?) {
-                supportStartPostponedEnterTransition()
                 callOnFailure(call)
             }
 
@@ -156,7 +162,7 @@ class ActivityDetail : ActivityBase() {
                 when {
                     response?.code() == 200 -> {
                         calledServicePictures = true
-                        cancelDialogError()
+                        incrementServiceSuccessCount()
 
                         val maxSize = response.body()?.maxSize
                         val productImageArray = response.body()?.variations
@@ -187,14 +193,25 @@ class ActivityDetail : ActivityBase() {
         }
     }
 
+    fun incrementServiceSuccessCount() {
+        serviceSuccessCount++
+
+        if (serviceSuccessCount > 2) {
+            cancelDialogError()
+            serviceSuccessCount = 0
+        }
+    }
+
 
     /**
      * Handling the Dialog Error onCancel event
      *
      */
-    override fun onCancel() {
-        activity_detail_progress_bar.visibility = View.GONE
-        layout_retry_constraint_layout.visibility = View.VISIBLE
+    override fun onCancel(description: String) {
+        if (description == getString(R.string.mobile_internet_error)) {
+            activity_detail_progress_bar.visibility = View.GONE
+            layout_retry_constraint_layout.visibility = View.VISIBLE
+        }
     }
 
     /**
@@ -202,6 +219,7 @@ class ActivityDetail : ActivityBase() {
      *
      */
     override fun onRetry() {
+        serviceSuccessCount = 0
         callServiceDescription()
         callServicePictures()
     }

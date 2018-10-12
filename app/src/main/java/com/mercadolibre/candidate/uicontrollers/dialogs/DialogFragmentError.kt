@@ -39,7 +39,7 @@ class DialogFragmentError : AppCompatDialogFragment() {
         dialog_error_text_view_description.text = dialogDescription
 
         dialog_error_button_cancel.setOnClickListener {
-            onDialogClickListener?.onCancel()
+            onDialogClickListener?.onCancel(dialogDescription.toString())
             dismiss()
         }
 
